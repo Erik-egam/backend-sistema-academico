@@ -1,0 +1,5 @@
+fastapi
+mysql-connector-python
+python-jose
+passlib[bcrypt]
+python-multipart

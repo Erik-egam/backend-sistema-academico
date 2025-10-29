@@ -1,0 +1,69 @@
+-- ----------------------------------------------------
+-- INSERTS: ROLES
+-- ----------------------------------------------------
+INSERT INTO roles (id_rol, nombre_rol) VALUES
+('ADMIN', 'Administrador'),
+('PROF', 'Profesor'),
+('EST', 'Estudiante');
+
+-- ----------------------------------------------------
+-- INSERTS: PROGRAMAS
+-- ----------------------------------------------------
+INSERT INTO programas (nombre_programa, descripcion_programa) VALUES
+('Ingeniería de Sistemas', 'Programa centrado en desarrollo de software y gestión de sistemas informáticos'),
+('Administración de Empresas', 'Formación en gestión empresarial y liderazgo'),
+('Ingeniería Industrial', 'Optimización de sistemas productivos');
+
+-- ----------------------------------------------------
+-- INSERTS: USUARIOS
+-- Nota: id_usuario NO es autoincrement, por eso se define manualmente
+-- ----------------------------------------------------
+INSERT INTO usuarios (id_usuario, nombre_usuario, apellido_usuario, email_usuario, password_hash, id_programa, id_rol, activo)
+VALUES
+(1, 'Carlos', 'Martinez', 'carlos.admin@ulibre.edu.co', 'adminhash', NULL, 'ADMIN', 1),
+(2, 'Andrea', 'Lopez', 'andrea.prof@ulibre.edu.co', 'profhash', 1, 'PROF', 1),
+(3, 'Juan', 'Gomez', 'juan.gomez@ulibre.edu.co', 'hash654', 1, 'EST', 1),
+(4, 'Maria', 'Ruiz', 'maria.ruiz@ulibre.edu.co', 'hash987', 1, 'EST', 1),
+(5, 'Pedro', 'Santos', 'pedro.santos@ulibre.edu.co', 'hashabc', 2, 'EST', 1);
+
+-- ----------------------------------------------------
+-- INSERTS: SEMESTRES
+-- ----------------------------------------------------
+INSERT INTO semestres (nombre, fecha_inicio, fecha_fin) VALUES
+('2025-1', '2025-01-15', '2025-06-20'),
+('2025-2', '2025-07-10', '2025-12-10');
+
+-- ----------------------------------------------------
+-- INSERTS: ASIGNATURAS
+-- ----------------------------------------------------
+INSERT INTO asignaturas (codigo, nombre, creditos, id_programa) VALUES
+('IS101', 'Programación I', 4, 1),
+('IS102', 'Bases de Datos', 3, 1),
+('AD101', 'Fundamentos de Administración', 3, 2),
+('II101', 'Procesos Industriales', 3, 3);
+
+-- ----------------------------------------------------
+-- INSERTS: SEMESTRE-ASIGNATURAS
+-- ----------------------------------------------------
+INSERT INTO semestres_asignaturas (id_semestre, id_asignatura, id_profesor) VALUES
+(1, 1, 2),
+(1, 2, 2),
+(2, 1, 2),
+(2, 2, 2);
+
+-- ----------------------------------------------------
+-- INSERTS: MATRICULAS
+-- ----------------------------------------------------
+INSERT INTO matriculas (valor, id_usuario, id_programa) VALUES
+(2500000.000, 3, 1),
+(2500000.000, 4, 1),
+(2300000.000, 5, 2);
+
+-- ----------------------------------------------------
+-- INSERTS: NOTAS
+-- ----------------------------------------------------
+INSERT INTO notas (id_estudiante, id_semestre, id_asignatura, nota1, nota2, nota3, nota_final, asistencia1, asistencia2, asistencia3) VALUES
+(3, 1, 1, 4.0, 4.5, 4.2, 4.23, 90, 88, 85),
+(3, 1, 2, 3.5, 3.8, 4.0, 3.77, 92, 89, 90),
+(4, 1, 1, 3.2, 3.5, 3.7, 3.47, 85, 80, 82),
+(4, 1, 2, 2.8, 3.1, 3.3, 3.07, 75, 70, 78);
