@@ -15,7 +15,7 @@ from models.Usuario import Usuario, UsuarioDB
 
 router = APIRouter(
     prefix="/users",
-    tags=["endpoint para usuarios"]
+    tags=["endpoint's para usuarios"]
     )
 oauth2 = OAuth2PasswordBearer(tokenUrl="login")
 crypt = CryptContext(schemes=["bcrypt"])
