@@ -10,8 +10,12 @@ excepcion_campos = HTTPException(
         status_code=status.HTTP_400_BAD_REQUEST,
         detail="Campo no admitido"
     )
-class Creaciones:
+class Admin_functions:
+    # =================================
+    #           CREACIONES
+    # =================================
     
+        
     def crear_usuario(nuevo_usuario: UsuarioDB):
         if not nuevo_usuario.id_usuario:
             raise excepcion_campos
@@ -133,3 +137,40 @@ class Creaciones:
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"Error: {e}"
             )
+    # ===============================
+    #         ELIMINAR USUARIO
+    # ===============================
+    
+    def dar_de_baja_usuario(id_usuario: int):
+        try:
+            cursor = conexion.cursor()
+            peticion = """
+            UPDATE usuarios SET activo=0 WHERE id_usuario=%s;
+            """
+            cursor.execute(peticion,(id_usuario,))
+            conexion.commit()
+            cursor.close()
+        except IntegrityError as e:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Error: {e}"
+            )
+            
+    # ===============================
+    #         ACTIVAR USUARIO
+    # ===============================
+    def activar_usuario(id_usuario: int):
+        try:
+            cursor = conexion.cursor()
+            peticion = """
+            UPDATE usuarios SET activo=1 WHERE id_usuario=%s;
+            """
+            cursor.execute(peticion,(id_usuario,))
+            conexion.commit()
+            cursor.close()
+        except IntegrityError as e:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Error: {e}"
+            )
+    
