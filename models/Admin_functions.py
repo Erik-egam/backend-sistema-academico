@@ -6,6 +6,8 @@ from models.Programa import Programa
 from models.Asignatura import Asignatura
 from models.Semestre import Semestre
 from datetime import datetime
+
+
 excepcion_campos = HTTPException(
         status_code=status.HTTP_400_BAD_REQUEST,
         detail="Campo no admitido"
@@ -174,3 +176,33 @@ class Admin_functions:
                 detail=f"Error: {e}"
             )
     
+    def asignar_profesor_asignatura(id_profesor: int, id_asignatura: int, id_semestre: int):
+        try:
+            cursor = conexion.cursor()
+            peticion = """
+            UPDATE semestres_asignaturas SET id_profesor=%s WHERE id_semestre=%s AND id_asignatura=%s;
+            """
+            cursor.execute(peticion,(id_profesor,id_semestre, id_asignatura))
+            conexion.commit()
+            cursor.close()
+        except IntegrityError as e:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Error: {e}"
+            )
+            
+    def avilitar_asignatura(id_asignatura):
+        try:
+            cursor = conexion.cursor()
+            cursor.execute(
+                """
+                INSERT INTO semestres_asignaturas (id_semestre, id_asignatura)
+                VALUES (
+                (SELECT MAX(id_semestre) FROM semestres), 2);
+                """
+            )
+        except IntegrityError as e:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Error {e}"
+            )

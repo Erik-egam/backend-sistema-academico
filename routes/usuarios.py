@@ -55,7 +55,7 @@ async def buscar_usuario_db(email:str) -> UsuarioDB:
     )
     return resultado
 
-async def buscar_usuario(email:str) -> UsuarioDB:
+async def buscar_usuario(email:str) -> Usuario:
     cursor = conexion.cursor()
     cursor.execute("select * from usuarios where email_usuario= %s;", (email,))
     usuario = cursor.fetchone()
