@@ -6,3 +6,6 @@ class Asignatura(BaseModel):
     nombre: str
     creditos: int
     id_programa: int
+    
+class Asignatura_actual(Asignatura):
+    programa: str

@@ -1,11 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from models.Usuario import Usuario, UsuarioDB
-from models.Programa import Programa
+from models.Usuario import Usuario
 from models.estudiantes_functions import estudiantes_functions
-from models.Asignatura import Asignatura
-from models.Semestre import Semestre
-from routes.usuarios import autenticar_usuario, buscar_usuario,conexion
-from mysql.connector import IntegrityError
+from routes.usuarios import autenticar_usuario
 
 router = APIRouter(
     prefix="/estudiante",
