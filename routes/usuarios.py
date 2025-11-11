@@ -92,10 +92,11 @@ async def login(form: OAuth2PasswordRequestForm = Depends()):
         
     access_token = jwt.encode({
         "sub": usuario.email,
-        "rol": usuario.id_rol,
         "exp": datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     }, SECRET_KEY, algorithm=ALGORITHM)
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, 
+            "token_type": "bearer",
+            "rol": usuario.id_rol}
 
 async def autenticar_usuario(token: str = Depends(oauth2)) -> Usuario:
     exception = HTTPException(

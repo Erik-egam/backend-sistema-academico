@@ -98,8 +98,8 @@ async def buscar_usuario_id(id_usuario:int):
     return resultado
         
 
-@router.put("/asignar/profesor/{id_profesor}/semestre/{id_semestre}/asignatura/{id_asignatura}", status_code=status.HTTP_202_ACCEPTED)
-async def asignar_profesor(id_profesor:int,id_semestre:int,id_asignatura:int, usuario: Usuario = Depends(autenticar_usuario)):
+@router.put("/asignar/profesor/{id_profesor}/asignatura/{id_asignatura}", status_code=status.HTTP_202_ACCEPTED)
+async def asignar_profesor(id_profesor:int,id_asignatura:int, usuario: Usuario = Depends(autenticar_usuario)):
     usuario_admin(usuario.id_rol)
     profesor = await buscar_usuario_id(id_profesor)
     if profesor.id_rol != "PROF":
@@ -107,15 +107,47 @@ async def asignar_profesor(id_profesor:int,id_semestre:int,id_asignatura:int, us
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="El usuario no es profesor"
         )
-    Admin_functions.asignar_profesor_asignatura(id_profesor,id_semestre,id_asignatura)
+    Admin_functions.asignar_profesor_asignatura(id_profesor,id_asignatura)
     return {
         "mensaje": "Profesor asignado correctamente"
     }
     
-@router.post("/avilitar/asignatura/{id_asignatura}")
+@router.put("/avilitar/asignatura/{id_asignatura}")
 async def avalitar_asignatura(id_asignatura: int, usuario: Usuario = Depends(autenticar_usuario)):
     usuario_admin(usuario.id_rol)
     Admin_functions.avilitar_asignatura(id_asignatura=id_asignatura)
     return {
         "mensaje": "Asignatura avalitada correctamente"
     }
+    
+@router.get('/programas')
+def lista_programas(usuario: Usuario = Depends(autenticar_usuario)):
+    usuario_admin(usuario.id_rol)
+    return Admin_functions.listar_programas()
+
+@router.get('/programa/profesores/{id_programa}')
+def lista_profesores_programa(id_programa: int, usuario : Usuario = Depends(autenticar_usuario)):
+    usuario_admin(usuario.id_rol)
+    return Admin_functions.listar_profesores_programa(id_programa)
+
+@router.get('/programa/estudiantes/{id_programa}')
+def lista_profesores_programa(id_programa: int, usuario : Usuario = Depends(autenticar_usuario)):
+    usuario_admin(usuario.id_rol)
+    return Admin_functions.listar_estudiantes_programa(id_programa)
+
+
+@router.get('/programa/asignaturas/{id_programa}')
+def listar_asignaturas_programa(id_programa: int, usuario : Usuario = Depends(autenticar_usuario)):
+    usuario_admin(usuario.id_rol)
+    return Admin_functions.listar_asignaturas_programa(id_programa=id_programa)
+
+@router.get('/programa/asignaturas/{id_programa}/todas')
+def listar_asignaturas_programa(id_programa: int, usuario : Usuario = Depends(autenticar_usuario)):
+    usuario_admin(usuario.id_rol)
+    return Admin_functions.listar_asignaturas_programa_todas(id_programa=id_programa)
+
+@router.get('/profesor/asignaturas/{id_profesor}')
+def listar_asignaturas_programa(id_profesor: int, usuario : Usuario = Depends(autenticar_usuario)):
+    usuario_admin(usuario.id_rol)
+    return Admin_functions.listar_asignaturas_profesor(idProfesor=id_profesor)
+

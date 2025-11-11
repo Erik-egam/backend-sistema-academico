@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import Optional
 
 class Asignatura(BaseModel):
+    id_asignatura: Optional[int] = None
     codigo:str
     nombre: str
     creditos: int
