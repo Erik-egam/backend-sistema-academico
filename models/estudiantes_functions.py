@@ -2,7 +2,7 @@ from fastapi import HTTPException, status
 from routes.usuarios import conexion
 from mysql.connector import IntegrityError
 from models.Semestre import Semestre
-from models.Notas import Nota
+from models.Notas import Notas
 from models.Asignatura import Asignatura
 
 
@@ -64,7 +64,7 @@ class estudiantes_functions:
             
             for nota in resultado:
                 notas.append(
-                    Nota(
+                    Notas(
                         asignatura=nota[-3],
                         nota1=nota[3],
                         nota2=nota[4],

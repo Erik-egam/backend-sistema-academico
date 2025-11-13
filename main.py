@@ -1,8 +1,17 @@
 from fastapi import FastAPI
 from routes import usuarios, admin, estudiantes, profesores
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 """ AGREGANDO RUTAS """
 
 app.include_router(admin.router)
